@@ -19,10 +19,14 @@ public class UsuarioResource {
     private UsuarioService service;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> createChat(@RequestBody @Valid UsuarioRecordDTO usuario){
-        Usuario u = new Usuario();
-        BeanUtils.copyProperties(usuario, u);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(u));
+    public ResponseEntity createChat(@RequestBody @Valid UsuarioRecordDTO usuario){
+        try {
+            Usuario u = new Usuario();
+            BeanUtils.copyProperties(usuario, u);
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.save(u));
+        }catch (IllegalArgumentException i){
+            return ResponseEntity.status(HttpStatus.CREATED).body(i.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
