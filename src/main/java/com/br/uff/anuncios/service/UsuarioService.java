@@ -14,16 +14,15 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository repository;
     @Autowired
-    public UsuarioService(UsuarioRepository repository){ this.repository = repository;}
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Transactional
     public Usuario findById(Long id){
-        Optional<Usuario> optUser = repository.findById(id);
+        Optional<Usuario> optUser = usuarioRepository.findById(id);
         return optUser.orElse(null);
     }
 
@@ -37,8 +36,8 @@ public class UsuarioService {
         var password = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(password);
 
-        repository.save(usuario);
-        return repository.save(usuario);
+        usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
 
     }
 
