@@ -33,4 +33,15 @@ public class AvaliacaoService {
         DecimalFormat df = new DecimalFormat("#.0");
         return Double.valueOf(df.format(average).replace(",", "."));
     }
+    @Transactional
+    public void createRating(Avaliacao novaAvaliacao) {
+        if (novaAvaliacao.getAvaliacao() < 1 || novaAvaliacao.getAvaliacao() > 5) {
+            throw new IllegalArgumentException("A avaliação deve estar entre 1 e 5.");
+        }
+        if (novaAvaliacao.getId_usuario_avaliado().equals(novaAvaliacao.getId_usuario_avaliador())) {
+            throw new IllegalArgumentException("Um usuário não pode avaliar a si mesmo.");
+        }
+        repository.save(novaAvaliacao);
+    }
+
 }

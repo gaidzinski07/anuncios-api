@@ -24,4 +24,15 @@ public class AvaliacaoResource {
         Double average = service.getAverageByUserId(idUsuarioAvaliado);
         return ResponseEntity.status(HttpStatus.OK).body(average);
     }
+
+    @PostMapping("/criar")
+    public ResponseEntity<String> createRating(@RequestBody Avaliacao novaAvaliacao) {
+        try {
+            service.createRating(novaAvaliacao);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Avaliação criada com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar avaliação: " + e.getMessage());
+        }
+    }
+
 }
