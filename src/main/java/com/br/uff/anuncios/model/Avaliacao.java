@@ -22,5 +22,7 @@ public class Avaliacao implements Serializable {
     private Long id_usuario_avaliado;
     @Column
     private Long id_usuario_avaliador;
+    @Column
+    private Long id_anuncio;
 
 }
