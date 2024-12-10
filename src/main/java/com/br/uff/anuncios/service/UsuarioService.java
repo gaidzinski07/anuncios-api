@@ -20,6 +20,7 @@ public class UsuarioService {
     @Transactional
     public Usuario findById(Long id){
         Optional<Usuario> optUser = repository.findById(id);
+        System.out.println("optUser: " + optUser);
         return optUser.orElse(null);
     }
 
