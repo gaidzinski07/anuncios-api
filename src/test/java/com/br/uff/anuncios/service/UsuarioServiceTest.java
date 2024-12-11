@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.br.uff.anuncios.model.Usuario;
 import com.br.uff.anuncios.repository.UsuarioRepository;
@@ -24,6 +25,9 @@ public class UsuarioServiceTest {
 
   @Mock
   private UsuarioRepository usuarioRepository;
+
+  @Mock
+  private PasswordEncoder passwordEncoder;
 
   @Test
   @DisplayName("Deve ser capaz de encontrar usuário por id")
@@ -46,11 +50,12 @@ public class UsuarioServiceTest {
       usuario.setSenha("123456");
       usuario.setTelefone("21999999999");
       
+      when(passwordEncoder.encode("123456")).thenReturn("encodedPassword");
       when(usuarioRepository.save(usuario)).thenReturn(usuario);
 
       var result = usuarioService.save(usuario);
 
-      assertEquals(usuario, result);
+      assertEquals(1L, result.getId());
     }
 
     @Test
