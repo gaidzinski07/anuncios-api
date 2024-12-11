@@ -9,6 +9,9 @@
 name: Java CI tests
 
 on:
+  push:
+    branches:
+      - '**'
   pull_request:
     branches: 
       - '**'
