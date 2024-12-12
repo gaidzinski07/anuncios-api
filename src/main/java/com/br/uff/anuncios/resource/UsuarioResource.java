@@ -1,5 +1,6 @@
 package com.br.uff.anuncios.resource;
 
+import com.br.uff.anuncios.dto.AuthTokenDTO;
 import com.br.uff.anuncios.dto.AuthUsuarioDTO;
 import com.br.uff.anuncios.dto.UsuarioRecordDTO;
 import com.br.uff.anuncios.model.Usuario;
@@ -28,7 +29,7 @@ public class UsuarioResource {
     @PostMapping("/auth")
     public ResponseEntity<Object> authenticate(@RequestBody AuthUsuarioDTO authUsuarioDTO) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(service.authenticate(authUsuarioDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(new AuthTokenDTO(service.authenticate(authUsuarioDTO)));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
