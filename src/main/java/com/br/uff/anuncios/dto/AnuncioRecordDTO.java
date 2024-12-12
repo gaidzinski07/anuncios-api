@@ -1,15 +1,18 @@
 package com.br.uff.anuncios.dto;
 
+import com.br.uff.anuncios.model.enums.Categoria;
+import com.br.uff.anuncios.model.enums.TipoAnuncio;
+
 import java.math.BigDecimal;
 
 public record AnuncioRecordDTO(
         Long id,
         String descricao,
         byte[] foto,
-        String tipoAnuncio,
+        TipoAnuncio tipoAnuncio,
         BigDecimal preco,
         String endereco,
-        String categoria,
+        Categoria categoria,
         Long idUsuario
 ) {
 }

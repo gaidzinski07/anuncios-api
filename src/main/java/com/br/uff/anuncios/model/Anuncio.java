@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class Anuncio {
     private TipoAnuncio tipoAnuncio;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "categoria", nullable = false)
     private Categoria categoria;
 
     @Column(nullable = false, length = 255)
@@ -41,5 +42,17 @@ public class Anuncio {
     @Column(name = "id_usuario", nullable = false)
     private Long idUsuario;
 
-
+    @Override
+    public String toString() {
+        return "Anuncio{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", foto=" + Arrays.toString(foto) +
+                ", preco=" + preco +
+                ", tipoAnuncio=" + tipoAnuncio +
+                ", categoria=" + categoria +
+                ", endereco='" + endereco + '\'' +
+                ", idUsuario=" + idUsuario +
+                '}';
+    }
 }

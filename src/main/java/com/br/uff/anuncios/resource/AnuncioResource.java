@@ -40,12 +40,12 @@ public class AnuncioResource {
         anuncioService.delete(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getAllAnuncio")
     public ResponseEntity<List<Anuncio>> getAllAnuncio() throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(anuncioService.findAll());
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity updateAnuncio(@RequestBody @Valid AnuncioRecordDTO anuncioRecordDTO) throws Exception {
         Anuncio anuncio = new Anuncio();
         BeanUtils.copyProperties(anuncioRecordDTO, anuncio);
