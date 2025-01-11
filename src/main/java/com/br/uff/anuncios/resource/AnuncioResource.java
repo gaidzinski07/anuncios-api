@@ -25,7 +25,7 @@ public class AnuncioResource {
 
         Anuncio anuncio = new Anuncio();
         BeanUtils.copyProperties(anuncioRecordDTO, anuncio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(anuncioService.save(anuncio));
+        return ResponseEntity.status(HttpStatus.CREATED).body(anuncioService.save(anuncioRecordDTO));
 
     }
 

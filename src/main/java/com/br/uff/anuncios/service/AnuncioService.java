@@ -2,6 +2,7 @@ package com.br.uff.anuncios.service;
 
 import com.br.uff.anuncios.dto.AnuncioRecordDTO;
 import com.br.uff.anuncios.model.Anuncio;
+import com.br.uff.anuncios.model.Usuario;
 import com.br.uff.anuncios.repository.AnuncioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,10 +23,30 @@ public class AnuncioService {
     @Autowired
     private AnuncioRepository anuncioRepository;
 
-    @Transactional
-    public Anuncio save(Anuncio anuncio) throws Exception {
+    @Autowired
+    private UsuarioService usuarioService;
+
+    public Anuncio save(AnuncioRecordDTO anuncioDTO) throws Exception {
         try {
-            System.out.println("Salvando anúncio: " + anuncio.toString());
+            System.out.println("Salvando anúncio: " + anuncioDTO.toString());
+
+            // Converte o DTO para a entidade Anuncio
+            Anuncio anuncio = new Anuncio();
+            anuncio.setId(anuncioDTO.id());
+            anuncio.setDescricao(anuncioDTO.descricao());
+            anuncio.setFoto(anuncio.getFoto());
+            anuncio.setPreco(anuncioDTO.preco());
+            anuncio.setTipoAnuncio(anuncioDTO.tipoAnuncio());
+            anuncio.setCategoria(anuncioDTO.categoria());
+            anuncio.setEndereco(anuncioDTO.endereco());
+
+            // Aqui você recupera o usuário com o ID informado no DTO
+            Usuario usuario = usuarioService.findById(anuncioDTO.usuario().getId());
+
+            // Associa o usuário ao anúncio
+            anuncio.setUsuario(usuario);
+
+            // Salva o anúncio no banco de dados
             return anuncioRepository.save(anuncio);
         } catch (Exception e) {
             throw new Exception("Erro ao salvar o anúncio: " + e.getMessage());

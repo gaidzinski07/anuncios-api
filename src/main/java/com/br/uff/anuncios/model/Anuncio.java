@@ -39,20 +39,9 @@ public class Anuncio {
     @Column(nullable = false, length = 255)
     private String endereco;
 
-    @Column(name = "id_usuario", nullable = false)
-    private Long idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
-    @Override
-    public String toString() {
-        return "Anuncio{" +
-                "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", foto=" + Arrays.toString(foto) +
-                ", preco=" + preco +
-                ", tipoAnuncio=" + tipoAnuncio +
-                ", categoria=" + categoria +
-                ", endereco='" + endereco + '\'' +
-                ", idUsuario=" + idUsuario +
-                '}';
-    }
+
 }

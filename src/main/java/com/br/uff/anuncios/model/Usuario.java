@@ -26,6 +26,9 @@ public class Usuario implements Serializable {
     private String telefone;
     @Transient
     private Integer reputacao;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anuncio> anuncios;
+
     //private List<String> historicoDeTrancacoes;
 
 }
