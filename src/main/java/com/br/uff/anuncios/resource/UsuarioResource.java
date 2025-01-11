@@ -2,7 +2,7 @@ package com.br.uff.anuncios.resource;
 
 import com.br.uff.anuncios.model.Usuario;
 import com.br.uff.anuncios.service.UsuarioService;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class UsuarioResource {
     private UsuarioService service;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> createChat(@RequestBody @Valid Usuario usuario){
+    public ResponseEntity<Usuario> createChat(@RequestBody  Usuario usuario){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuario));
     }
 
