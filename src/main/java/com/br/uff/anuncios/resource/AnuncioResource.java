@@ -1,31 +1,57 @@
 package com.br.uff.anuncios.resource;
 
-import com.br.uff.anuncios.dto.AnuncioDTO;
+import com.br.uff.anuncios.dto.AnuncioRecordDTO;
 import com.br.uff.anuncios.model.Anuncio;
 import com.br.uff.anuncios.service.AnuncioService;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/anuncio")
 public class AnuncioResource {
 
     @Autowired
-    private AnuncioService service;
+    private AnuncioService anuncioService;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody @NotNull AnuncioDTO dto){
-        Anuncio anuncio = dto.convertToEntity();
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(anuncio));
+    @PostMapping("/criar")
+    public ResponseEntity createChat(@RequestBody AnuncioRecordDTO anuncioRecordDTO) throws Exception {
+
+        Anuncio anuncio = new Anuncio();
+        BeanUtils.copyProperties(anuncioRecordDTO, anuncio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(anuncioService.save(anuncioRecordDTO));
+
     }
 
-    @GetMapping("/buscar/{titulo}")
-    public ResponseEntity buscaSimples(@PathVariable String titulo){
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscaSimples(titulo));
+    @GetMapping("/{id}")
+    public ResponseEntity<Anuncio> getById(@PathVariable("id") Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(anuncioService.findById(id));
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable("id") Long id){
+        anuncioService.delete(id);
+    }
+
+    @GetMapping("/getAllAnuncio")
+    public ResponseEntity<List<Anuncio>> getAllAnuncio() throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(anuncioService.findAll());
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity updateAnuncio(@RequestBody @Valid AnuncioRecordDTO anuncioRecordDTO) throws Exception {
+        Anuncio anuncio = new Anuncio();
+        BeanUtils.copyProperties(anuncioRecordDTO, anuncio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(anuncioService.update(anuncio));
+
+    }
+
 
 }
