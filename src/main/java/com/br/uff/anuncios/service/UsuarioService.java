@@ -78,4 +78,13 @@ public class UsuarioService {
         return token;
     }
 
+    @Transactional
+    public Usuario update(Usuario usuario){
+        Optional<Usuario> optUser = this.usuarioRepository.findById(usuario.getId());
+
+        usuario.setSenha(optUser.get().getSenha());
+
+        return this.usuarioRepository.save(usuario);
+    }
+
 }
