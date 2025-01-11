@@ -3,7 +3,7 @@ package com.br.uff.anuncios.resource;
 import com.br.uff.anuncios.dto.AnuncioRecordDTO;
 import com.br.uff.anuncios.model.Anuncio;
 import com.br.uff.anuncios.service.AnuncioService;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,7 @@ public class AnuncioResource {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateAnuncio(@RequestBody AnuncioRecordDTO anuncioRecordDTO) throws Exception {
+    public ResponseEntity updateAnuncio(@RequestBody @Valid AnuncioRecordDTO anuncioRecordDTO) throws Exception {
         Anuncio anuncio = new Anuncio();
         BeanUtils.copyProperties(anuncioRecordDTO, anuncio);
         return ResponseEntity.status(HttpStatus.CREATED).body(anuncioService.update(anuncio));
