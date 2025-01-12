@@ -6,6 +6,8 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "usuario")
 @NoArgsConstructor
@@ -33,6 +35,7 @@ public class Usuario implements Serializable {
     @Transient
     private Integer reputacao;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Anuncio> anuncios;
 }

@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "anuncio")
 @NoArgsConstructor
@@ -16,6 +18,9 @@ public class Anuncio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private String titulo;
 
     @Column
     private String descricao;
@@ -32,6 +37,7 @@ public class Anuncio implements Serializable {
     @Column
     private String tipoAnuncio;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
