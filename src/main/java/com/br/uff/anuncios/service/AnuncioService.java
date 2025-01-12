@@ -39,4 +39,14 @@ public class AnuncioService {
     public List<Anuncio> listar() {
         return repository.findAll();
     }
+
+    @Transactional
+    public Anuncio editar(Anuncio anuncio) {
+        return repository.save(anuncio);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        repository.deleteById(id);
+    }
 }

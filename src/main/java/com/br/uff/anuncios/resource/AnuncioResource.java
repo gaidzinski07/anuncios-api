@@ -39,4 +39,15 @@ public class AnuncioResource {
         return ResponseEntity.status(HttpStatus.OK).body(service.listar());
     }
 
+    @PutMapping("/editar")
+    public ResponseEntity editar(@RequestBody Anuncio anuncio){
+        return ResponseEntity.status(HttpStatus.OK).body(service.editar(anuncio));
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity deletar(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }
