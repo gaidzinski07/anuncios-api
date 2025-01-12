@@ -34,4 +34,9 @@ public class AnuncioResource {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscaSimples(titulo));
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity listar(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listar());
+    }
+
 }

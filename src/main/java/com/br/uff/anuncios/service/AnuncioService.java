@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AnuncioService {
@@ -33,5 +34,9 @@ public class AnuncioService {
 
         return repository.buscaSimples(titulo);
 
+    }
+
+    public List<Anuncio> listar() {
+        return repository.findAll();
     }
 }
