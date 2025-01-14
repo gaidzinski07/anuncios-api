@@ -2,11 +2,15 @@ package com.br.uff.anuncios.resource;
 
 import com.br.uff.anuncios.dto.AnuncioDTO;
 import com.br.uff.anuncios.model.Anuncio;
+import com.br.uff.anuncios.model.Usuario;
 import com.br.uff.anuncios.service.AnuncioService;
+import com.br.uff.anuncios.service.UsuarioService;
+
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +21,33 @@ public class AnuncioResource {
     @Autowired
     private AnuncioService service;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody @NotNull AnuncioDTO dto){
-        Anuncio anuncio = dto.convertToEntity();
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @PostMapping("/criar")
+    public ResponseEntity cadastrar(@RequestBody @NotNull Anuncio anuncio){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(anuncio));
     }
 
     @GetMapping("/buscar/{titulo}")
     public ResponseEntity buscaSimples(@PathVariable String titulo){
         return ResponseEntity.status(HttpStatus.OK).body(service.buscaSimples(titulo));
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity listar(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listar());
+    }
+
+    @PutMapping("/editar")
+    public ResponseEntity editar(@RequestBody Anuncio anuncio){
+        return ResponseEntity.status(HttpStatus.OK).body(service.editar(anuncio));
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity deletar(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
