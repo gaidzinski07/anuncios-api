@@ -13,10 +13,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
 
 
 @Controller
@@ -51,7 +58,22 @@ public class UsuarioResource {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
-    
-    
+    @GetMapping("/perfil")
+    public ResponseEntity<Usuario> getPerfil(){
+        try {
+            String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return ResponseEntity.status(HttpStatus.OK).body(service.findByEmail(email));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
 
+    @PutMapping("/editar")
+    public ResponseEntity<Usuario> update(@RequestBody Usuario usuario){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(service.update(usuario));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 }

@@ -36,6 +36,11 @@ public class UsuarioService {
         return optUser.orElse(null);
     }
 
+    public Usuario findByEmail(String email){
+        Optional<Usuario> optUser = this.usuarioRepository.findByEmail(email);
+        return optUser.orElse(null);
+    }
+
     @Transactional
     public Usuario save(Usuario usuario) throws IllegalArgumentException{
 
@@ -71,6 +76,15 @@ public class UsuarioService {
             .sign(algorithm);
 
         return token;
+    }
+
+    @Transactional
+    public Usuario update(Usuario usuario){
+        Optional<Usuario> optUser = this.usuarioRepository.findById(usuario.getId());
+
+        usuario.setSenha(optUser.get().getSenha());
+
+        return this.usuarioRepository.save(usuario);
     }
 
 }
